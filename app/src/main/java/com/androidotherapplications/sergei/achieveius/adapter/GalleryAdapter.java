@@ -23,11 +23,17 @@ import com.androidotherapplications.sergei.achieveius.model.Image;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHolder> {
 
-    private List<Image> images;
+    // private List<Image> images;//тут хранятся картинки-елементи ресайклера
+    // не силен в типе Image,сделаю для простих чисел,а вы просто немного переделайте.
     private Context mContext;
 
+
+    public void addItem(int param){
+        notifyDataSetChanged();
+    }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView thumbnail;
+
 
         public MyViewHolder(View view) {
             super(view);
@@ -36,9 +42,10 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
     }
 
 
-    public GalleryAdapter(Context context, List<Image> images) {
+    public GalleryAdapter(Context context){//, List<Image> images) {я пока забрал лист картинок,
+        // хз что туда передвать
         mContext = context;
-        this.images = images;
+        //  this.images = images;
     }
 
     @Override
@@ -51,18 +58,18 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Image image = images.get(position);
+//        Image image = images.get(position);
 
-        Glide.with(mContext).load(image.getMedium())
+       /* Glide.with(mContext).load(image.getMedium())
                 .thumbnail(0.5f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(holder.thumbnail);
+                .into(holder.thumbnail);*/
     }
 
     @Override
     public int getItemCount() {
-        return images.size();
+        return 5;// images.size();
     }
 
     public interface ClickListener {
@@ -75,6 +82,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
         private GestureDetector gestureDetector;
         private GalleryAdapter.ClickListener clickListener;
+
 
         public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final GalleryAdapter.ClickListener clickListener) {
             this.clickListener = clickListener;
